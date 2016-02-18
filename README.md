@@ -21,13 +21,23 @@ Chaos will ensue.
 Here are some tools I wrote to help me conduct this vital analysis:
 
 | Program | Function |
-| --- | --- |
-| bring_me_emails.py | Can slurp up and save stats of emails stored in mbox, Maildir or notmuchmail.
+--- | --- |
+|plottingi bring\_me\_emails.py | Can slurp up and save stats of emails stored
+in mbox, Maildir or notmuchmail.
 | strip_ids.py | Can remove personal info (message-ids) from a sqlite3 database created by bring_me_emails.py
 | Subject line growth-sqlite-scatter.ipynb | Create a scatter plot of email subject line length (ipython/jupyter notebook)
+| plotlengths.py | Plot scatter plot and save as a PNG file from the command
+line |
+
+You'll need the [matplotlib](http://matplotlib.org/users/installing.html)
+libraries to use the plotlengths.py script, and
+[Jupyter/ipython](http://jupyter.readthedocs.org/en/latest/install.html) to run
+the ipython notebook. If you want to read mail stored in notmuch, you'll need
+its accompanying [python library](https://pypi.python.org/pypi/notmuch/).
 
 An example email database (115MB, stripped of personal info) is [available
-separately](https://archive.org/details/emailsubjectlinelengths) [(torrent)](https://archive.org/download/emailsubjectlinelengths/emailsubjectlinelengths_archive.torrent)
+separately](https://archive.org/details/emailsubjectlinelengths)
+[(torrent)](https://archive.org/download/emailsubjectlinelengths/emailsubjectlinelengths_archive.torrent)
 
 ----
 
