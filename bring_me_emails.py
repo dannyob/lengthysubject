@@ -40,7 +40,11 @@ import email.utils
 import datetime
 import logging
 
-import notmuch
+try:
+    import notmuch
+except ImportError:
+    pass
+
 import sqlite3
 
 from itertools import chain
