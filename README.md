@@ -2,7 +2,7 @@
 Subject line growth over the years -- a qualitative approach
 ============================================================
 
-This code accompanies a blog post at <http://www.oblomovka.com/wp/2016/02/16/lengthy-subject-matter/>.
+This code accompanies a blog post at <http://www.oblomovka.com/wp/2016/02/17/are-email-subject-lines-getting-longer/>
 
 Summary:
 I noticed that the subject lines from my inbox circa 1998 seem, on average,
