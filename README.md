@@ -22,10 +22,12 @@ Here are some tools I wrote to help me conduct this vital analysis:
 
 | Program | Function |
 --- | --- |
-|plottingi bring\_me\_emails.py | Can slurp up and save stats of emails stored
-in mbox, Maildir or notmuchmail.
-| strip_ids.py | Can remove personal info (message-ids) from a sqlite3 database created by bring_me_emails.py
-| Subject line growth-sqlite-scatter.ipynb | Create a scatter plot of email subject line length (ipython/jupyter notebook)
+| bring\_me\_emails.py | Can slurp up and save stats of emails stored
+in mbox, Maildir or notmuchmail. |
+| strip_ids.py | Can remove personal info (message-ids) from a sqlite3 database
+created by bring_me_emails.py |
+| Subject line growth-sqlite-scatter.ipynb | Create a scatter plot of email
+subject line length (ipython/jupyter notebook) |
 | plotlengths.py | Plot scatter plot and save as a PNG file from the command
 line |
 
