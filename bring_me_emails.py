@@ -8,12 +8,13 @@ It seemed like email subject lines have been getting longer, and I wanted to
 create a database of the subject line lengths in all my emails.
 
 Part of my historical email archive is stored as (gzipped) mbox files (see
-<URI:https://en.wikipedia.org/wiki/Mbox>. The rest are stored in a notmuchmail
-database (see <URI:https://notmuchmail.org/>.
+<https://en.wikipedia.org/wiki/Mbox>. The rest are stored in a notmuchmail
+database (see <https://notmuchmail.org/>.
 
-This program has three functions that yield a tuple of message-id, subject, and
-date headers for mbox directories, a notmuch database, and for completeness, a
-Maildir folder.
+This program has four functions that each yield a tuple of message-id, subject,
+and date headers. One is for parsing mbox directories, one scans notmuch
+database, one reads a single Maildir folder, and one parses a local copy of the
+Enron Email Dataset (see <https://www.cs.cmu.edu/~./enron/>.)
 
 These are chained together to feed to a main function that stores these values
 in a sqlite3 database for later analysis.
@@ -37,6 +38,7 @@ import sys
 import gzip
 import mailbox
 import email.utils
+from email.parser import Parser
 import datetime
 import logging
 
@@ -111,9 +113,42 @@ def bring_me_notmuchmail(path):
         yield (mid, sub, dd)
 
 
+def bring_me_enron(path):
+    """ Scans all emails from the Enron Email Dataset, a freely available corpus
+        of c515K emails.
+
+        Used successfully with the May 7, 2015 version of the dataset, available from:
+        https://www.cs.cmu.edu/~./enron/enron_mail_20150507.tgz
+
+        Based on code originally by Bryan Nehl
+        <http://soloso.blogspot.com/2011/07/getting-enron-mail-database-into.html>
+        and the author of <http://mongodb-enron-email.s3-website-us-east-1.amazonaws.com/>
+
+        Yields (message-id, subject, date) header strings """
+
+    p = Parser()
+    for root, dirs, files in os.walk(path, topdown=False):
+
+        # distinct file name
+        for filename in files:
+            nameOfFileToOpen = "{0}/{1}".format(root, filename)
+            dataFile = open(nameOfFileToOpen)
+            raw_contents = ""
+            try:
+                for dataLine in dataFile:
+                    raw_contents += dataLine
+            finally:
+                dataFile.close()
+            contents = raw_contents.decode('cp1252')
+            msg = p.parsestr(contents.encode("utf-8"))
+            yield (msg['message-id'], msg['subject'], msg['date'])
+
+
 notmuch_path = '/home/mailuser/mynotmuchpath'
 mailbox_path = '/home/mailuser/mymailboxesarehere'
 maildir_path = '/home/mailuser/a_single_Maildir_folder/'
+# enron_path = '/home/enronuser/maildir/'
+
 all_mails = chain(bring_me_mboxen(mailbox_path), bring_me_a_maildir(maildir_path), bring_me_notmuchmail(notmuch_path))
 
 cnt = 0
