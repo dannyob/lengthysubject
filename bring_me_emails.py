@@ -60,9 +60,11 @@ try:
 except ImportError:
     pass
 
-conn = sqlite3.connect('emailsubjectlinelengths.db')
-conn.execute("create table if not exists email_stats(id TEXT PRIMARY KEY, date TEXT, subject INT)")
-c = conn.cursor()
+
+def init_database(f):
+    conn = sqlite3.connect('emailsubjectlinelengths.db')
+    conn.execute("create table if not exists email_stats(id TEXT PRIMARY KEY, date TEXT, subject INT)")
+    return conn
 
 
 def bring_me_mboxen(path):
@@ -143,6 +145,8 @@ def bring_me_enron(path):
             msg = p.parsestr(contents.encode("utf-8"))
             yield (msg['message-id'], msg['subject'], msg['date'])
 
+conn = init_database('email.db')
+c = conn.cursor()
 
 notmuch_path = '/home/mailuser/mynotmuchpath'
 mailbox_path = '/home/mailuser/mymailboxesarehere'
